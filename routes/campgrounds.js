@@ -90,26 +90,55 @@ router.get("/campgrounds/:id/edit", middleware.checkCampgroundOwnership, functio
 	//find and update the correct campground
 	//redirect somewhere
 router.put("/campgrounds/:id", middleware.checkCampgroundOwnership, function(req, res){
-	geocoder.geocode(req.body.campground.location, function (err, data) {
-		if (err || !data.length) {
-			console.log(err);
-		  	req.flash('error', 'Invalid address');
-		 	return res.redirect('back');
-		}
-		req.body.campground.lat = data[0].latitude;
-		req.body.campground.lng = data[0].longitude;
-		req.body.campground.location = data[0].formattedAddress;
-	
-		Campground.findByIdAndUpdate(req.params.id, req.body.campground, function(err, updatedCampground){	
-			if(err){
-				req.flash("error", err.message);
-				res.redirect("/campgrounds");
+	//update this route so it checks if the campground location has even changed
+	Campground.findById(req.params.id, function(err, foundCampground){
+		if(err){
+			//if error flash error and send the user back
+			req.flash("error", err.message);
+			res.redirect("back");
+		}else{
+			//we found a campground, lets check if location has been changed
+			//if the location is the same dont do the api call, just update the campground
+			//this can be refactored for code to be DRY but it works
+			if (foundCampground.location == req.body.campground.location){
+				// req.flash("success", "location is the same");
+				Campground.findByIdAndUpdate(req.params.id, req.body.campground, function(err, updatedCampground){	
+					if(err){
+						req.flash("error", err.message);
+						res.redirect("/campgrounds");
+					}else{
+						req.flash("success", "Campground updated")
+						res.redirect("/campgrounds/" + req.params.id);
+					}
+				});
 			}else{
-				req.flash("success", "Campground updated")
-				res.redirect("/campgrounds/" + req.params.id);
+				//if the location is different do the apicall
+				// req.flash("error", "location is different");
+				geocoder.geocode(req.body.campground.location, function(err, data){
+					if(err || !data.length){
+						console.log(err);
+						req.flash('error', "Invalid address");
+						return res.redirect("back");
+					}
+					req.body.campground.lat = data[0].latitude;
+					req.body.campground.lng = data[0].longitude;
+					req.body.campground.location = data[0].formattedAddress;
+					//after doing api call or not update the campground
+					Campground.findByIdAndUpdate(req.params.id, req.body.campground, function(err, updatedCampground){	
+						if(err){
+							req.flash("error", err.message);
+							res.redirect("/campgrounds");
+						}else{
+							req.flash("success", "Campground updated")
+							res.redirect("/campgrounds/" + req.params.id);
+						}
+					});
+				});
 			}
-		});
+		}
 	});
+	
+
 });
 
 // Delete Campground route
