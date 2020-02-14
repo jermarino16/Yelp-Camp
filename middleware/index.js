@@ -21,7 +21,7 @@ middlewareObj.checkCampgroundOwnership = function(req, res, next){
 		//get the campground
 		Campground.findById(req.params.id, function(err, foundCampground){
 			//check if the users id is the campgrounds author id
-			if(foundCampground.author.id.equals(req.user._id)){
+			if(foundCampground.author.id.equals(req.user._id) || req.user.isAdmin){
 				//if its the id then let them do w/e
 				next();
 			}else{//if its not the id then send em back
@@ -42,7 +42,7 @@ middlewareObj.verifyCommentOwnership = function(req,res,next){
 		//get comment and check for correct user id
 		Comment.findById(req.params.comment_id, function(err, foundComment){
 			//check if the comment matches the id of user
-			if(foundComment.author.id.equals(req.user._id)){//req.user is stored thanks to passport module
+			if(foundComment.author.id.equals(req.user._id) || req.user.isAdmin){//req.user is stored thanks to passport module
 				//we can go to next if its correct owner
 				next();
 			}else{

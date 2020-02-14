@@ -28,8 +28,8 @@
 							  <em>Submitted by: <%= campground.author.username %>, <%= moment(campground.createdAt).fromNow() %></em>
 						</p>		
 					<% } %> 
-					<% if (currentUser && campground.author.id) { %>
-						<% if (campground.author.id.equals(currentUser._id)){  //mongoose method to check if they are equal%>
+					<% if (currentUser && campground.author.id || currentUser.isAdmin) { %>
+						<% if (campground.author.id.equals(currentUser._id) || currentUser.isAdmin){  //mongoose method to check if they are equal%>
 							<a class ="btn btn-warning" href="/campgrounds/<%= campground._id %>/edit"> Edit the campground!</a>
 							<form class="delete-form" action="/campgrounds/<%= campground._id %>?_method=DELETE" method="POST">
 								<button class ="btn btn-danger"> Delete the campground</button>
@@ -52,8 +52,8 @@
 						<p>
 							<%= comment.text %>
 						</p>
-						<% if (currentUser && comment.author.id) { %>
-							<% if (comment.author.id.equals(currentUser._id)){  //mongoose method to check if they are equal%>
+						<% if (currentUser && comment.author.id || currentUser.isAdmin) { %>
+							<% if (comment.author.id.equals(currentUser._id) || currentUser.isAdmin){  //mongoose method to check if they are equal%>
 								<a class="btn btn-xs btn-warning" 
 								   href="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>/edit">Edit comment</a>
 									<form class="delete-form" 
