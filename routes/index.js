@@ -16,12 +16,11 @@ router.get("/register", function(req, res){
 
 //handle sign-up logic 
 router.post("/register", function(req, res){
-	console.log(req.body.username);
 	var newUser = new User({username: req.body.username});
 	User.register(newUser, req.body.password, function(err, user){	//we get this from local mongoose
 		if(err){
 			req.flash("error", err.message);
-			return res.render("register");
+			return res.render("register", {error: err.message});
 		}
 		else{
 			passport.authenticate("local")(req, res, function(){
