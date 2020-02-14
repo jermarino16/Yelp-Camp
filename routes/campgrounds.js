@@ -21,7 +21,7 @@ router.get("/campgrounds", function(req, res){
 		if(err){
 			req.flash("error", err);
 		}else{
-			res.render("campgrounds/index", {campgrounds: all_campgrounds, currentUser: req.user});
+			res.render("campgrounds/index", {campgrounds: all_campgrounds, currentUser: req.user, page: 'campgrounds'});
 		}
 	}) 
 	
@@ -51,7 +51,6 @@ router.post("/campgrounds", middleware.isLoggedIn, function(req, res){
 			if(err){
 				req.flash("error", err);
 			}else{
-				console.log(newCreated);
 				req.flash("success", "Campground Created");
 				res.redirect("/campgrounds");//go back to campground page after create
 			}
