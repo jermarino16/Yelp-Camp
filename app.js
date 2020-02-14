@@ -60,7 +60,7 @@ app.use(indexRoutes);
 app.use(commentRoutes);
 app.use(campgroundRoutes);
 
-// seedDB(); //remove all campgrounds from DB
+seedDB(); //clear database
 
 app.listen(process.env.PORT || 3000, process.env.ip, function(){
 	console.log("Yelp Server has started");
