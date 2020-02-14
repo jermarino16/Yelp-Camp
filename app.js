@@ -17,6 +17,9 @@ var commentRoutes = require("./routes/comments"),
 	campgroundRoutes = require("./routes/campgrounds"),
 	indexRoutes = require("./routes/index")
 
+//Moment Config for time
+app.locals.moment = require("moment");
+
 //	==============================
 // 	PASSPORT CONFIGURATION
 // ==============================
