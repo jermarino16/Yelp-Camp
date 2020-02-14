@@ -23,11 +23,12 @@ router.post("/campgrounds", middleware.isLoggedIn, function(req, res){
 	var name = req.body.name;
 	var image = req.body.image;
 	var desc = req.body.description;
+	var cost = req.body.cost;
 	var author = {
 		id: req.user._id,
 		username: req.user.username
 	};
-	var newCampground = {name: name, image: image, description: desc, author: author};
+	var newCampground = {name: name, image: image, description: desc, author: author, cost:cost};
 	Campground.create(newCampground, function(err, newCreated){//using the object schema defined at top to access db
 		if(err){
 			req.flash("error", err);
