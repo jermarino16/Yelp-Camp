@@ -64,3 +64,35 @@ body {
 label {
 	font-weight: bold;
 }
+/*
+ * Footer
+ */
+.blog-footer {
+	padding: 1.0rem 0;
+	color: #FFF;
+	text-align: center;
+	background-color: #212529;
+	border-top: .05rem solid #e5e5e5;  
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+}
+.blog-footer p:last-child {
+  margin-bottom: 0;
+}
+/*
+ * Footer for main campground page because footer is not working properly
+ */
+.blog-footer2 {
+	padding: 1.0rem 0;
+	color: #FFF;
+	text-align: center;
+	background-color: #212529;
+	border-top: .05rem solid #e5e5e5;  
+	/* position: absolute; */
+	bottom: 0;
+	width: 100%;
+}
+.blog-footer2 p:last-child {
+  margin-bottom: 0;
+}
