@@ -53,3 +53,10 @@ body {
     height: 400px;
     width: 100%;
 }
+
+label {
+	font-weight: bold;
+}
+
+
+
