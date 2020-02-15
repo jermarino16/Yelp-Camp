@@ -3,6 +3,13 @@ body {
   height: 100%;
 }
 
+.center-me-please {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .form-signin {
   width: 100%;
   max-width: 330px;
@@ -57,4 +64,3 @@ body {
 label {
 	font-weight: bold;
 }
-
