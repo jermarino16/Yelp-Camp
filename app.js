@@ -1,21 +1,29 @@
 require('dotenv').config();
 
-var express 	= require("express"),
-	app 		= express(),
-	bodyParser 	= require("body-parser"),
-	mongoose 	= require("mongoose"),
-	flash 		= require("connect-flash"),
-	passport 	= require("passport"),
-	LocalStrategy = require("passport-local"),
-	MethodOverride = require("method-override"),
-	Campground 	= require("./models/campgrounds.js"),
-	Comment 	= require("./models/comments"),
-	User 		= require("./models/users"),
-	seedDB = require("./seeds");
+const 	express 		= require("express"),
+		bodyParser 		= require("body-parser"),
+		mongoose 		= require("mongoose"),
+		flash 			= require("connect-flash"),
+		passport 		= require("passport"),
+		LocalStrategy 	= require("passport-local"),
+		MethodOverride 	= require("method-override"),
+	  
+		Campground 		= require("./models/campgrounds.js"),
+		Comment 		= require("./models/comments"),
+		User 			= require("./models/users"),
+		seedDB 			= require("./seeds");
 
-var commentRoutes = require("./routes/comments"),
-	campgroundRoutes = require("./routes/campgrounds"),
-	indexRoutes = require("./routes/index")
+const 	keys 			= require('./config/keys');
+
+const 	commentRoutes 	= require("./routes/comments"),
+		campgroundRoutes = require("./routes/campgrounds"),
+		indexRoutes 	= require("./routes/index")
+
+require('./services/cache');
+mongoose.Promise = global.Promise;
+mongoose.connect(keys.mongoURI, { useMongoClient: true });
+
+const app = express();
 
 //Moment Config for time
 app.locals.moment = require("moment");

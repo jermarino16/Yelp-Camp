@@ -1,9 +1,11 @@
 const mongoose = require("mongoose");
 const redis = require("redis");
 const util = require("util");
-
-const redisUrl = "????";
-const client = redis.createClient(redisUrl);
+ 
+const client = redis.createClient();
+client.on("error", function(error) {
+  console.error(error);
+});
 client.hget = util.promisify(client.hget); //makes function return a promise
 
 const exec = mongoose.Query.prototype.exec;
