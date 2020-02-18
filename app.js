@@ -19,9 +19,9 @@ const 	commentRoutes 	= require("./routes/comments"),
 		campgroundRoutes = require("./routes/campgrounds"),
 		indexRoutes 	= require("./routes/index")
 
-require('./services/cache');
-mongoose.Promise = global.Promise;
-mongoose.connect(keys.mongoURI, { useMongoClient: true });
+// require('./services/cache');
+// mongoose.Promise = global.Promise;
+// mongoose.connect(keys.mongoURI, { useMongoClient: true });
 
 const app = express();
 
