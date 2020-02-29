@@ -20,13 +20,13 @@ router.post("/register", (req, res) => {
   if (req.body.adminCode === process.env.ADMIN_CODE) {
     newUser.isAdmin = true;
   }
-  User.register(newUser, req.body.password, function(err, user) {
+  User.register(newUser, req.body.password, (err, user) => {
     //we get this from local mongoose
     if (err) {
       req.flash("error", err.message);
       return res.render("register", { error: err.message });
     } else {
-      passport.authenticate("local")(req, res, function() {
+      passport.authenticate("local")(req, res, () => {
         req.flash("success", "Welcome to YelpCamp " + req.body.username);
         res.redirect("/campgrounds");
       });
